@@ -5,10 +5,11 @@ const { Category, Product } = require("../../models");
 
 // Get route to find all categories
 router.get("/", async (req, res) => {
-  // be sure to include its associated Products
   try {
     // Variable to await the find all method on the Category Model
-    const categoryData = await Category.findAll();
+    const categoryData = await Category.findAll({
+      include: [{ model: Product }],
+    });
 
     // Send a response status of 200 with the results in JSON
     res.status(200).json(categoryData);
@@ -21,11 +22,12 @@ router.get("/", async (req, res) => {
 
 // Get route to find a category by its id
 router.get("/:id", async (req, res) => {
-  // be sure to include its associated Products
   try {
     // Variable to await the find by primary key method on the Category Model
     // Pass the id from the request to the method
-    const categoryData = await Category.findByPk(req.params.id);
+    const categoryData = await Category.findByPk(req.params.id, {
+      include: [{ model: Product }],
+    });
 
     // If statement to handle a nonexistent id
     if (!categoryData) {
