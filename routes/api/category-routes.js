@@ -6,13 +6,15 @@ const { Category, Product } = require("../../models");
 // Get route to find all categories
 router.get("/", async (req, res) => {
   try {
-    // Variable to await the find all method on the Category Model
+    // Variable to await the find all method on the Category model
     const categoryData = await Category.findAll({
+      // Include the products associated with each category
       include: [{ model: Product }],
     });
 
     // Send a response status of 200 with the results in JSON
     res.status(200).json(categoryData);
+
     // Catch for errors
   } catch (err) {
     // Send a response status of 500 and the error in JSON
@@ -20,10 +22,10 @@ router.get("/", async (req, res) => {
   }
 });
 
-// Get route to find a category by its id
+// Get route to find one category by its id
 router.get("/:id", async (req, res) => {
   try {
-    // Variable to await the find by primary key method on the Category Model
+    // Variable to await the find by primary key method on the Category model
     // Pass the id from the request to the method
     const categoryData = await Category.findByPk(req.params.id, {
       include: [{ model: Product }],
