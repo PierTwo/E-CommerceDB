@@ -3,10 +3,10 @@ const sequelize = require("../config/connection.js");
 
 class Category extends Model {}
 
-// Initializes a Category Model
+// Initializes the Category model
 Category.init(
   {
-    // Column for category ids to be used as the primary keys
+    // Column for category id to be used as the primary key
     id: {
       type: DataTypes.INTEGER,
       allowNull: false,
