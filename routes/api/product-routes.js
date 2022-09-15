@@ -114,15 +114,35 @@ router.put("/:id", (req, res) => {
         ProductTag.bulkCreate(newProductTags),
       ]);
     })
-    .then((updatedProductTags) => res.json(updatedProductTags))
+    .then((updatedProductTags) => res.status(200).json(updatedProductTags))
     .catch((err) => {
       // console.log(err);
       res.status(400).json(err);
     });
 });
 
-router.delete("/:id", (req, res) => {
-  // delete one product by its `id` value
+router.delete("/:id", async (req, res) => {
+  try {
+    // Variable to await the destroy method on the Product model
+    // Pass the id to delete from the request parameters
+    const deleteProduct = await Product.destroy({ where: { id: req.params.id } });
+
+    // If statement to handle a nonexistent id
+    if (!deleteProduct) {
+      // Return a 404 status response with a message that the id couldn't be found
+      return res
+        .status(404)
+        .json({ message: `Could not find a product with an id of ${req.params.id}` });
+    }
+
+    // Send a response status of 200 with the results in JSON
+    res.status(200).json(deleteProduct);
+
+    // Catch for errors
+  } catch (err) {
+    // Send a response status of 500 and the error in JSON
+    res.status(500).json(err);
+  }
 });
 
 module.exports = router;
