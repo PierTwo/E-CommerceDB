@@ -6,7 +6,7 @@ const { Product, Category, Tag, ProductTag } = require("../../models");
 // Get route to find all products
 router.get("/", async (req, res) => {
   try {
-    // Variable to await the find all method on the Category model
+    // Variable to await the find all method on the Product model
     const productData = await Product.findAll({
       // Include the categories and tags associated with each product
       include: [{ model: Category }, { model: Tag }],
@@ -25,7 +25,7 @@ router.get("/", async (req, res) => {
 // Get route to find one product by its id
 router.get("/:id", async (req, res) => {
   try {
-    // Variable to await the find all method on the Category model
+    // Variable to await the find by primary key method on the Product model
     const productData = await Product.findByPk(req.params.id, {
       include: [{ model: Category }, { model: Tag }],
     });
