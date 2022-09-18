@@ -47,6 +47,7 @@ Product.init(
         model: "category",
         key: "id",
       },
+      // Cascade when deleting a row
       onDelete: "CASCADE",
     },
   },
